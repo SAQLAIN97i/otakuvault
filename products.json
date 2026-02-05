@@ -73,4 +73,32 @@
       }
     }
   ]
+},
+{
+  "id": "furina-action-figure",
+  "name": "Furina Action Figure",
+  "category": "Genshin Impact",
+  "price": 141.29,
+  "originalPrice": 226.25,
+  "rating": 4,
+  "reviews": 27,
+  "badge": "LIMITED",
+  "discount": "-37%",
+  "stock": "in",
+  "amazonUrl": "https://amzn.in/d/05Bi9BB8",
+  "description": "💧 Genshin Impact merchandise: miHoYo game Furina characters. High quality game character sculptures for fans. Definitely a great gift for fans, desktop decorations\n\n💧 High quality: all the characters are carefully crafted, bright colors will not fade\n\n💧 Material: PVC environmentally friendly materials, will not release a pungent smell. And the product is flexible and not easily damaged\n\n💧Dimension:1/7 scale figure, The height is 28CM, restoring Furina's beautiful figure\n\n💧After-sales service: If you are not satisfied with our products, please don't hesitate to contact us. You will get a satisfactory solution",
+  "images": [
+    "images/furina-action-figure-1.jpg",
+    "images/furina-action-figure-2.jpg",
+    "images/furina-action-figure-3.jpg",
+    "images/furina-action-figure-4.jpg"
+  ],
+  "features": [
+    "High quality",
+    "Material: PVC environmentally friendly"
+  ],
+  "specs": {
+    "Brand": "Official",
+    "Type": "Genshin Impact"
+  }
 }
