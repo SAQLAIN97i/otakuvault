@@ -1,0 +1,1549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OtakuVault | Premium Anime Collectibles</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --primary-black: #0a0a0a;
+            --primary-white: #ffffff;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-highlight: rgba(255, 255, 255, 0.2);
+            --accent-glow: rgba(255, 255, 255, 0.3);
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --text-muted: rgba(255, 255, 255, 0.5);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 25px 50px rgba(0, 0, 0, 0.5);
+            --shadow-glow: 0 0 40px rgba(255, 255, 255, 0.1);
+            --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            --transition-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --accent-cyan: #00d4ff;
+            --accent-orange: #ff6b35;
+            --accent-green: #00c853;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--primary-black);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255,255,255,0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255,255,255,0.03) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(255,255,255,0.02) 0%, transparent 50%);
+            animation: bgPulse 8s ease-in-out infinite;
+        }
+
+        @keyframes bgPulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+
+        /* Floating Particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        @keyframes float {
+            from { transform: translateY(100vh) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            to { transform: translateY(-100vh) translateX(100px); opacity: 0; }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1.5rem 5%;
+            transition: all 0.4s var(--transition-smooth);
+            backdrop-filter: blur(0px);
+            background: transparent;
+        }
+
+        nav.scrolled {
+            backdrop-filter: blur(20px);
+            background: rgba(10, 10, 10, 0.85);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 1rem 5%;
+            box-shadow: var(--shadow-md);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            transition: transform 0.3s var(--transition-bounce);
+            cursor: pointer;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s;
+        }
+
+        .logo:hover .logo-icon {
+            background: var(--glass-highlight);
+            transform: rotate(10deg);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            position: relative;
+            transition: color 0.3s;
+            padding: 0.5rem 0;
+            cursor: pointer;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--text-primary);
+            transition: width 0.3s var(--transition-smooth);
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s var(--transition-smooth);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .nav-cta:hover {
+            background: var(--glass-highlight);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-glow);
+            gap: 0.75rem;
+        }
+
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            cursor: pointer;
+            padding: 0.75rem;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10rem 5% 6rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: center;
+        }
+
+        .hero-text {
+            z-index: 2;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+            transition: all 0.3s;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .hero-badge.visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.8s var(--transition-smooth);
+        }
+
+        .hero-badge:hover {
+            background: var(--glass-highlight);
+            transform: translateX(5px);
+        }
+
+        .hero-badge i {
+            color: #ffd700;
+            animation: sparkle 2s infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.2) rotate(180deg); }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.8) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .hero h1.visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.8s var(--transition-smooth) 0.2s;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            max-width: 500px;
+            line-height: 1.8;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .hero-subtitle.visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.8s var(--transition-smooth) 0.4s;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 3rem;
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .hero-stats.visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.8s var(--transition-smooth) 0.6s;
+        }
+
+        .stat {
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .stat:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            background: linear-gradient(135deg, #fff, rgba(255,255,255,0.7));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .hero-buttons.visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.8s var(--transition-smooth) 0.8s;
+        }
+
+        .btn-primary {
+            background: var(--text-primary);
+            color: var(--primary-black);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s var(--transition-spring);
+            border: 2px solid var(--text-primary);
+            cursor: pointer;
+            font-size: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.3);
+            gap: 0.75rem;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s var(--transition-spring);
+            border: 2px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-secondary:hover {
+            background: var(--glass-bg);
+            border-color: var(--glass-highlight);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: var(--shadow-glow);
+        }
+
+        /* Hero Visual */
+        .hero-visual {
+            position: relative;
+            height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+        }
+
+        .hero-image-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 1000px;
+        }
+
+        .hero-image {
+            width: 380px;
+            height: 480px;
+            object-fit: cover;
+            border-radius: 30px;
+            box-shadow: var(--shadow-lg);
+            transform: perspective(1000px) rotateY(-5deg) rotateX(5deg);
+            transition: all 0.6s var(--transition-smooth);
+            animation: floatImage 6s ease-in-out infinite;
+            border: 1px solid var(--glass-border);
+            cursor: pointer;
+        }
+
+        @keyframes floatImage {
+            0%, 100% { transform: perspective(1000px) rotateY(-5deg) rotateX(5deg) translateY(0); }
+            50% { transform: perspective(1000px) rotateY(-5deg) rotateX(5deg) translateY(-20px); }
+        }
+
+        .hero-image:hover {
+            transform: perspective(1000px) rotateY(0deg) rotateX(0deg) scale(1.05);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6), var(--shadow-glow);
+        }
+
+        .floating-card {
+            position: absolute;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 1.25rem;
+            box-shadow: var(--shadow-md);
+            animation: floatCard 4s ease-in-out infinite;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 10;
+            min-width: 140px;
+        }
+
+        .floating-card:hover {
+            transform: scale(1.1) !important;
+            border-color: var(--glass-highlight);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .floating-card-1 {
+            top: 5%;
+            right: 5%;
+            animation-delay: 0s;
+        }
+
+        .floating-card-2 {
+            bottom: 15%;
+            left: 0%;
+            animation-delay: 2s;
+        }
+
+        @keyframes floatCard {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(2deg); }
+        }
+
+        .floating-card img {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 0.75rem;
+            border: 1px solid var(--glass-border);
+            transition: transform 0.3s;
+        }
+
+        .floating-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .floating-card-text {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .floating-card-price {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: #4ade80;
+        }
+
+        /* Products Section */
+        .products-section {
+            padding: 8rem 5%;
+            background: linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.02) 50%, transparent 100%);
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .section-header.visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.7s var(--transition-smooth);
+        }
+
+        .section-tag {
+            display: inline-block;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 0.5rem 1.25rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .section-tag:hover {
+            background: var(--glass-highlight);
+            transform: translateY(-2px);
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.8) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .products-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .product-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            overflow: hidden;
+            transition: all 0.4s var(--transition-spring);
+            backdrop-filter: blur(10px);
+            position: relative;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            transform-style: preserve-3d;
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .product-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .product-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: var(--shadow-lg), var(--shadow-glow);
+            border-color: var(--glass-highlight);
+            z-index: 10;
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: rgba(255, 255, 255, 0.95);
+            color: var(--primary-black);
+            padding: 0.35rem 0.875rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            z-index: 10;
+            box-shadow: var(--shadow-sm);
+            animation: pulseBadge 2s infinite;
+            pointer-events: none;
+        }
+
+        @keyframes pulseBadge {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .product-image-wrapper {
+            position: relative;
+            height: 320px;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s var(--transition-smooth);
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.1);
+        }
+
+        .product-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 50%, transparent 100%);
+            transform: translateY(100%);
+            transition: transform 0.4s var(--transition-spring);
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .product-card:hover .product-overlay {
+            transform: translateY(0);
+        }
+
+        .quick-view {
+            background: var(--text-primary);
+            color: var(--primary-black);
+            border: none;
+            padding: 0.875rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s var(--transition-spring);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .quick-view:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(255,255,255,0.4);
+            gap: 0.75rem;
+        }
+
+        .product-info {
+            padding: 1.75rem;
+            background: transparent;
+        }
+
+        .product-category {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .product-card:hover .product-category {
+            color: var(--accent-glow);
+        }
+
+        .product-title {
+            font-size: 1.125rem;
+            margin-bottom: 0.75rem;
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .product-card:hover .product-title {
+            color: var(--text-primary);
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .stars {
+            display: flex;
+            gap: 0.25rem;
+            color: #ffd700;
+        }
+
+        .rating-count {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1.25rem;
+            border-top: 1px solid var(--glass-border);
+            gap: 1rem;
+        }
+
+        .product-price {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .price-original {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            text-decoration: line-through;
+        }
+
+        .price-current {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #4ade80;
+            text-shadow: 0 0 20px rgba(74, 222, 128, 0.3);
+        }
+
+        .btn-buy {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            padding: 0.875rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s var(--transition-spring);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            backdrop-filter: blur(10px);
+            white-space: nowrap;
+            font-size: 0.9rem;
+        }
+
+        .btn-buy:hover {
+            background: var(--text-primary);
+            color: var(--primary-black);
+            transform: scale(1.08);
+            box-shadow: var(--shadow-glow);
+            gap: 0.75rem;
+        }
+
+        /* Loading State */
+        .loading-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .skeleton-card {
+            background: var(--glass-bg);
+            border-radius: 24px;
+            height: 450px;
+            animation: skeletonPulse 1.5s infinite;
+        }
+
+        @keyframes skeletonPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 500;
+            z-index: 10001;
+            opacity: 0;
+            transition: all 0.4s var(--transition-spring);
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Footer */
+        footer {
+            padding: 5rem 5% 2rem;
+            border-top: 1px solid var(--glass-border);
+            background: rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        .footer-brand {
+            margin-bottom: 2rem;
+        }
+
+        .footer-brand h3 {
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .social-links a {
+            width: 44px;
+            height: 44px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            transition: all 0.3s var(--transition-spring);
+            text-decoration: none;
+        }
+
+        .social-links a:hover {
+            background: var(--text-primary);
+            color: var(--primary-black);
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: var(--shadow-glow);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 3rem;
+            }
+
+            .hero-text {
+                order: 2;
+            }
+
+            .hero-visual {
+                order: 1;
+                height: 450px;
+            }
+
+            .hero-stats {
+                justify-content: center;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .hero-subtitle {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .floating-card-1 {
+                right: 10%;
+                top: 0;
+            }
+
+            .floating-card-2 {
+                left: 10%;
+                bottom: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links, .nav-cta {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            .hero {
+                padding: 8rem 5% 4rem;
+            }
+
+            .hero h1 {
+                font-size: 2.25rem;
+            }
+
+            .hero-visual {
+                height: 350px;
+            }
+
+            .hero-image {
+                width: 280px;
+                height: 360px;
+            }
+
+            .floating-card {
+                display: none;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .hero-stats {
+                gap: 2rem;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--primary-black);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--glass-border);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--glass-highlight);
+        }
+
+        /* Selection Color */
+        ::selection {
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--text-primary);
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Effects -->
+    <div class="bg-animation"></div>
+    <div class="particles" id="particles"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo" onclick="window.scrollTo(0,0); return false;">
+                <div class="logo-icon">
+                    <i data-lucide="box"></i>
+                </div>
+                OtakuVault
+            </a>
+            
+            <ul class="nav-links">
+                <li><a href="#products" onclick="scrollToSection('products')">Products</a></li>
+                <li><a href="#features" onclick="scrollToSection('features')">Features</a></li>
+                <li><a href="#about" onclick="scrollToSection('about')">About</a></li>
+            </ul>
+
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <a href="#products" class="nav-cta" onclick="scrollToSection('products')">
+                    <i data-lucide="shopping-bag" style="width: 18px; height: 18px;"></i>
+                    Shop Now
+                </a>
+                <button class="mobile-menu-btn">
+                    <i data-lucide="menu" style="width: 24px; height: 24px;"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="hero-text">
+                <div class="hero-badge" id="heroBadge">
+                    <i data-lucide="sparkles" style="width: 16px; height: 16px;"></i>
+                    #1 Anime Collectibles Store
+                </div>
+                <h1 id="heroTitle">Premium Anime Figures & Collectibles</h1>
+                <p class="hero-subtitle" id="heroSubtitle">Discover authentic action figures from Demon Slayer, JJK, Attack on Titan & more. Student-friendly prices with Amazon secure checkout.</p>
+                
+                <div class="hero-stats" id="heroStats">
+                    <div class="stat">
+                        <span class="stat-number" data-target="10000">0</span>
+                        <span class="stat-label">Happy Collectors</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number" data-target="500">0</span>
+                        <span class="stat-label">Products</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number" data-target="99">0</span>
+                        <span class="stat-label">% Authentic</span>
+                    </div>
+                </div>
+
+                <div class="hero-buttons" id="heroButtons">
+                    <a href="#products" class="btn-primary" onclick="scrollToSection('products')">
+                        Explore Collection
+                        <i data-lucide="arrow-right" style="width: 20px; height: 20px;"></i>
+                    </a>
+                    <a href="#features" class="btn-secondary" onclick="scrollToSection('features')">
+                        View Features
+                    </a>
+                </div>
+            </div>
+
+            <div class="hero-visual">
+                <div class="hero-image-container">
+                    <img src="https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?w=800&q=80" 
+                         alt="Premium Anime Figure Collection" 
+                         class="hero-image"
+                         onclick="showToast('Click "Shop Now" to browse products!')">
+                    
+                    <div class="floating-card floating-card-1" onclick="showToast('Demon Slayer collection coming soon!')">
+                        <img src="https://images.unsplash.com/photo-1560972550-aba3456b5564?w=200&q=80" alt="Demon Slayer">
+                        <div class="floating-card-text">Demon Slayer</div>
+                        <div class="floating-card-price">$89.99</div>
+                    </div>
+
+                    <div class="floating-card floating-card-2" onclick="showToast('JJK collection trending now!')">
+                        <img src="https://images.unsplash.com/photo-1607604276583-eef5a0adcc99?w=200&q=80" alt="JJK">
+                        <div class="floating-card-text">Jujutsu Kaisen</div>
+                        <div class="floating-card-price">$74.99</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products-section" id="products">
+        <div class="section-header" id="productsHeader">
+            <span class="section-tag" onclick="showToast('Free shipping on orders over $50!')">Featured Products</span>
+            <h2 class="section-title">Trending Now</h2>
+            <p class="section-subtitle">Hand-picked favorites with exclusive Amazon deals</p>
+        </div>
+
+        <div class="products-grid" id="productsGrid">
+            <!-- Loading skeleton -->
+            <div class="loading-grid">
+                <div class="skeleton-card"></div>
+                <div class="skeleton-card"></div>
+                <div class="skeleton-card"></div>
+                <div class="skeleton-card"></div>
+                <div class="skeleton-card"></div>
+                <div class="skeleton-card"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="about">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>
+                    <div class="logo-icon" style="display: inline-flex; vertical-align: middle; margin-right: 0.5rem;">
+                        <i data-lucide="box" style="width: 24px; height: 24px;"></i>
+                    </div>
+                    OtakuVault
+                </h3>
+                <p style="max-width: 500px; margin: 0 auto 2rem; line-height: 1.8;">
+                    Your trusted destination for premium anime collectibles. 
+                    Authentic figures, student-friendly prices, and Amazon-secure shopping.
+                </p>
+                <div class="social-links">
+                    <a href="#" onclick="showToast('Instagram coming soon!')">
+                        <i data-lucide="instagram" style="width: 20px; height: 20px;"></i>
+                    </a>
+                    <a href="#" onclick="showToast('Twitter coming soon!')">
+                        <i data-lucide="twitter" style="width: 20px; height: 20px;"></i>
+                    </a>
+                    <a href="#" onclick="showToast('TikTok coming soon!')">
+                        <i data-lucide="music" style="width: 20px; height: 20px;"></i>
+                    </a>
+                    <a href="#" onclick="showToast('YouTube coming soon!')">
+                        <i data-lucide="youtube" style="width: 20px; height: 20px;"></i>
+                    </a>
+                </div>
+            </div>
+            <p>&copy; 2024 OtakuVault. All rights reserved. Amazon Associate Program Participant.</p>
+        </div>
+    </footer>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <i data-lucide="info" style="width: 20px; height: 20px;"></i>
+        <span id="toastMessage">Notification</span>
+    </div>
+
+    <script>
+        // ==========================================
+        // CREATE FLOATING PARTICLES
+        // ==========================================
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+                particle.style.opacity = Math.random() * 0.5 + 0.1;
+                container.appendChild(particle);
+            }
+        }
+        createParticles();
+
+        // ==========================================
+        // NAVIGATION SCROLL EFFECT
+        // ==========================================
+        const navbar = document.getElementById('navbar');
+        let lastScroll = 0;
+        
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            if (currentScroll > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+            lastScroll = currentScroll;
+        });
+
+        // ==========================================
+        // SCROLL TO SECTION
+        // ==========================================
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                const offset = 80;
+                const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+                window.scrollTo({
+                    top: elementPosition - offset,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        // ==========================================
+        // ANIMATE HERO ELEMENTS ON LOAD
+        // ==========================================
+        window.addEventListener('load', () => {
+            // Animate hero elements sequentially
+            setTimeout(() => document.getElementById('heroBadge').classList.add('visible'), 100);
+            setTimeout(() => document.getElementById('heroTitle').classList.add('visible'), 300);
+            setTimeout(() => document.getElementById('heroSubtitle').classList.add('visible'), 500);
+            setTimeout(() => {
+                document.getElementById('heroStats').classList.add('visible');
+                animateCounters();
+            }, 700);
+            setTimeout(() => document.getElementById('heroButtons').classList.add('visible'), 900);
+            
+            // Load products
+            loadProducts();
+            
+            // Initialize icons
+            lucide.createIcons();
+        });
+
+        // ==========================================
+        // COUNTER ANIMATION
+        // ==========================================
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-number');
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                const duration = 2000;
+                const increment = target / (duration / 16);
+                let current = 0;
+                
+                const updateCounter = () => {
+                    current += increment;
+                    if (current < target) {
+                        counter.textContent = Math.floor(current).toLocaleString();
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        counter.textContent = target.toLocaleString();
+                    }
+                };
+                
+                updateCounter();
+            });
+        }
+
+        // ==========================================
+        // LOAD PRODUCTS FROM JSON
+        // ==========================================
+        async function loadProducts() {
+            try {
+                // Try to fetch from products.json
+                const response = await fetch('products.json');
+                const data = await response.json();
+                renderProducts(data.products);
+            } catch (error) {
+                console.log('Using fallback products');
+                // Fallback products if JSON fails
+                const fallbackProducts = [
+                    {
+                        id: "actioncam-6k-pro",
+                        name: "ActionCam 6K Pro",
+                        category: "Cameras",
+                        price: 499,
+                        originalPrice: 599,
+                        rating: 4.8,
+                        reviews: 2341,
+                        badge: "HOT",
+                        images: ["https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=600&q=80"]
+                    },
+                    {
+                        id: "tanjiro-figure",
+                        name: "Tanjiro Kamado 1/8 Scale Figure",
+                        category: "Demon Slayer",
+                        price: 89.99,
+                        originalPrice: 129.99,
+                        rating: 4.9,
+                        reviews: 3420,
+                        badge: "BESTSELLER",
+                        images: ["https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?w=600&q=80"]
+                    },
+                    {
+                        id: "gojo-figure",
+                        name: "Gojo Satoru Unlimited Void Figure",
+                        category: "Jujutsu Kaisen",
+                        price: 104.99,
+                        originalPrice: 149.99,
+                        rating: 4.8,
+                        reviews: 2156,
+                        badge: "HOT",
+                        images: ["https://images.unsplash.com/photo-1560972550-aba3456b5564?w=600&q=80"]
+                    },
+                    {
+                        id: "levi-figure",
+                        name: "Levi Ackerman Battle Scene Figure",
+                        category: "Attack on Titan",
+                        price: 79.99,
+                        originalPrice: 119.99,
+                        rating: 4.7,
+                        reviews: 1890,
+                        badge: null,
+                        images: ["https://images.unsplash.com/photo-1607604276583-eef5a0adcc99?w=600&q=80"]
+                    },
+                    {
+                        id: "anime-bundle",
+                        name: "Ultimate Anime Fan Bundle",
+                        category: "Accessories",
+                        price: 34.99,
+                        originalPrice: 59.99,
+                        rating: 4.9,
+                        reviews: 5670,
+                        badge: "NEW",
+                        images: ["https://images.unsplash.com/photo-1578632767115-351597cf2477?w=600&q=80"]
+                    },
+                    {
+                        id: "hashira-set",
+                        name: "Demon Slayer Hashira Complete Set",
+                        category: "Limited Edition",
+                        price: 349.99,
+                        originalPrice: 499.99,
+                        rating: 5.0,
+                        reviews: 487,
+                        badge: "LIMITED",
+                        images: ["https://images.unsplash.com/photo-1563089145-599997674d42?w=600&q=80"]
+                    }
+                ];
+                renderProducts(fallbackProducts);
+            }
+        }
+
+        // ==========================================
+        // RENDER PRODUCTS
+        // ==========================================
+        function renderProducts(products) {
+            const grid = document.getElementById('productsGrid');
+            
+            grid.innerHTML = products.map((product, index) => `
+                <a href="product.html?id=${product.id}" class="product-card" style="transition-delay: ${index * 0.1}s">
+                    <div class="product-image-wrapper">
+                        ${product.badge ? `<span class="product-badge">${product.badge}</span>` : ''}
+                        <img src="${product.images[0]}" alt="${product.name}" class="product-image" loading="lazy">
+                        <div class="product-overlay">
+                            <button class="quick-view" onclick="event.preventDefault(); event.stopPropagation(); quickView('${product.id}')">
+                                <i data-lucide="eye" style="width: 18px; height: 18px;"></i>
+                                Quick View
+                            </button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">${product.category}</div>
+                        <h3 class="product-title">${product.name}</h3>
+                        <div class="product-rating">
+                            <div class="stars">
+                                ${generateStars(product.rating)}
+                            </div>
+                            <span class="rating-count">(${formatNumber(product.reviews)})</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="product-price">
+                                <span class="price-original">$${product.originalPrice}</span>
+                                <span class="price-current">$${product.price}</span>
+                            </div>
+                            <span class="btn-buy" onclick="event.preventDefault(); event.stopPropagation(); window.open('${product.amazonUrl || '#'}', '_blank')">
+                                Buy Now
+                                <i data-lucide="external-link" style="width: 16px; height: 16px;"></i>
+                            </span>
+                        </div>
+                    </div>
+                </a>
+            `).join('');
+            
+            // Re-init icons for new content
+            lucide.createIcons();
+            
+            // Animate products on scroll
+            setupScrollAnimations();
+        }
+
+        // ==========================================
+        // GENERATE STAR RATING
+        // ==========================================
+        function generateStars(rating) {
+            let stars = '';
+            for (let i = 1; i <= 5; i++) {
+                if (i <= Math.floor(rating)) {
+                    stars += '<svg width="16" height="16" viewBox="0 0 24 24" fill="#ffd700" stroke="#ffd700" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>';
+                } else if (i === Math.ceil(rating) && rating % 1 !== 0) {
+                    stars += '<svg width="16" height="16" viewBox="0 0 24 24"><defs><linearGradient id="half'+i+'"><stop offset="50%" stop-color="#ffd700"/><stop offset="50%" stop-color="transparent"/></linearGradient></defs><polygon fill="url(#half'+i+')" stroke="#ffd700" stroke-width="2" points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>';
+                } else {
+                    stars += '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffd700" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>';
+                }
+            }
+            return stars;
+        }
+
+        // ==========================================
+        // FORMAT NUMBER
+        // ==========================================
+        function formatNumber(num) {
+            return num >= 1000 ? (num/1000).toFixed(1) + 'k' : num;
+        }
+
+        // ==========================================
+        // SCROLL ANIMATIONS
+        // ==========================================
+        function setupScrollAnimations() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            // Observe section header
+            const header = document.getElementById('productsHeader');
+            if (header) observer.observe(header);
+
+            // Observe product cards
+            document.querySelectorAll('.product-card').forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(40px)';
+                setTimeout(() => {
+                    observer.observe(card);
+                }, index * 100);
+            });
+        }
+
+        // ==========================================
+        // QUICK VIEW MODAL
+        // ==========================================
+        function quickView(productId) {
+            showToast('Loading product details...');
+            setTimeout(() => {
+                window.location.href = `product.html?id=${productId}`;
+            }, 500);
+        }
+
+        // ==========================================
+        // TOAST NOTIFICATION
+        // ==========================================
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMessage').textContent = message;
+            toast.classList.add('show');
+            
+            // Re-init icon
+            lucide.createIcons();
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // ==========================================
+        // 3D TILT EFFECT FOR PRODUCT CARDS (Desktop)
+        // ==========================================
+        if (window.innerWidth > 768) {
+            document.addEventListener('mousemove', (e) => {
+                const cards = document.querySelectorAll('.product-card:hover');
+                cards.forEach(card => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    const rotateX = (y - centerY) / 20;
+                    const rotateY = (centerX - x) / 20;
+                    
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-12px) scale(1.02)`;
+                });
+            });
+
+            document.addEventListener('mouseout', (e) => {
+                if (e.target.classList && e.target.classList.contains('product-card')) {
+                    e.target.style.transform = '';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
