@@ -1060,6 +1060,11 @@
     opacity: 1;
     transform: translateY(0);
 }
+        /* FORCE visibility (override inline JS styles) */
+.product-card.visible {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
     </style>
 </head>
 <body>
